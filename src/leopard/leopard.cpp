@@ -131,7 +131,7 @@ LEO_EXPORT LeopardResult leo_encode(
     if (buffer_bytes <= 0 || buffer_bytes % 64 != 0)
         return Leopard_InvalidSize;
 
-    if (recovery_count <= 0)
+    if (recovery_count <= 0 || recovery_count > original_count)
         return Leopard_InvalidCounts;
 
     if (!original_data || !work_data)
@@ -242,7 +242,7 @@ LEO_EXPORT LeopardResult leo_decode(
     if (buffer_bytes <= 0 || buffer_bytes % 64 != 0)
         return Leopard_InvalidSize;
 
-    if (recovery_count <= 0)
+    if (recovery_count <= 0 || recovery_count > original_count)
         return Leopard_InvalidCounts;
 
     if (!original_data || !recovery_data || !work_data)
@@ -279,6 +279,14 @@ LEO_EXPORT LeopardResult leo_decode(
     if (original_count == 1)
     {
         memcpy(work_data[0], recovery_data[recovery_got_i], buffer_bytes);
+        return Leopard_Success;
+    }
+    
+    // Handle case original_loss_count = 0
+    if (original_loss_count == 0)
+    {
+        for(unsigned i = 0; i < original_count; i++)
+            memcpy(work_data[i], original_data[i], buffer_bytes);
         return Leopard_Success;
     }
 
