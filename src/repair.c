@@ -27,7 +27,9 @@
 #include <direct.h>
 #include <sys/stat.h>
 
+#ifndef S_ISDIR
 #define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
+#endif
 
 #endif
 
