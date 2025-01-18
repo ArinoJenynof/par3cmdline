@@ -1,3 +1,20 @@
+# Notes
+Bare minimum to compile par3cmdline with MSYS2 MinGW-w64 toolchain. According to original notes, code under `windows\` folder uses MSVC-specific code, but when i tried to compile with MinGW-w64 it compiles (and runs, repairing does work) anyway.
+
+# Building
+Download and setup [MSYS2](https://github.com/msys2/msys2-installer/releases/tag/nightly-x86_64) first,
+```bash
+pacman -Syuu --noconfirm
+pacman -S --needed mingw-w64-ucrt-x86_64-{gcc,make}
+```
+and compile this in UCRT64 environment
+```bash
+cd /path/to/par3cmdline/repo
+mingw32-make
+```
+
+**_original ReadMe below_**
+
 # par3cmdline
 Official repo for par3cmdline and par3lib
 
